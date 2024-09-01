@@ -56,8 +56,14 @@
                 />
               </div>
               <div class="commentText">
-                {{comment.text|safe}}
-                <span class="sub-text">{{comment.comment_author.name}}</span>
+                <p>{{comment.text|safe}}</p>
+                <!--  loop.index - 1 was introduced to start the counting of the time in posted_time list from zero as loop.index start counting from 1-->
+                <span class="date sub-text">{{comment.comment_author.name}} {{posted_time[loop.index - 1]}}</span>
+                <span>
+                  {% if comment.comment_author.email==logged_in.email: %}
+                    <a href="{{url_for('delete_comment', comment_id=comment.id, post_id=post.id) }}">✘</a>
+                  {% endif %}
+                </span>
               </div>
             </li>
             {% endfor %}
